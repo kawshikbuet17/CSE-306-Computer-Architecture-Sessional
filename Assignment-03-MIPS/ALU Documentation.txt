@@ -1,0 +1,6 @@
+ALU Documentation
+000 = ADD
+001 = SUB
+010 = AND
+011 = OR
+100 = NOR
