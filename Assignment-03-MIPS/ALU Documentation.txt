@@ -4,3 +4,5 @@ ALU Documentation
 010 = AND
 011 = OR
 100 = NOR
+101 = SLL
+110 = SRL
