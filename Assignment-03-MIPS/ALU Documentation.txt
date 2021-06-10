@@ -6,3 +6,4 @@ ALU Documentation
 100 = NOR
 101 = SLL
 110 = SRL
+111 = Buffer
