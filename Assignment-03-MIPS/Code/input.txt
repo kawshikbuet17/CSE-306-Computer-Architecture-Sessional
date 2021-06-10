@@ -1,6 +1,5 @@
-j loop
-add $t1,$t2,$t3
-loop  : sub $t1,$t2,$t3
-add $t1,$t2,$t4
-add $t4,$t2,$t3
-and $t4,$t2,$t3
+add $t1,$t2,$one 
+add $t3,$t1,$t1
+sub $t1,$t1,$zero
+add $t3,$t3,$one
+or $t4,$t3,$t1
