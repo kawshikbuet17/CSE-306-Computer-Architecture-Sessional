@@ -288,6 +288,15 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
     <wire from="(430,380)" to="(430,440)"/>
     <wire from="(410,930)" to="(410,1180)"/>
     <wire from="(1590,410)" to="(1590,1280)"/>
+    <comp lib="4" loc="(990,1080)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t2"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="2" loc="(1430,1260)" name="Multiplexer">
+      <a name="select" val="4"/>
+      <a name="width" val="8"/>
+    </comp>
     <comp lib="4" loc="(630,250)" name="ROM">
       <a name="dataWidth" val="12"/>
       <a name="contents">addr/data: 8 12
@@ -296,12 +305,20 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
 1 100
 </a>
     </comp>
-    <comp lib="0" loc="(990,370)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="label" val="B"/>
-      <a name="labelloc" val="east"/>
+    <comp lib="4" loc="(990,810)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="zero"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="4" loc="(990,1320)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="sp"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="4" loc="(990,1160)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t3"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
     <comp lib="0" loc="(1710,1280)" name="Pin">
       <a name="facing" val="west"/>
@@ -311,60 +328,6 @@ This file is intended to be loaded by Logisim (http://www.cburch.com/logisim/).
       <a name="labelloc" val="east"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
-    <comp lib="4" loc="(330,380)" name="ROM">
-      <a name="dataWidth" val="20"/>
-      <a name="contents">addr/data: 8 20
-d0720 d0230
-</a>
-    </comp>
-    <comp lib="0" loc="(960,290)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="label" val="A"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="0" loc="(410,510)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="20"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="8" loc="(790,260)" name="main">
-      <a name="facing" val="south"/>
-    </comp>
-    <comp lib="0" loc="(40,390)" name="Constant"/>
-    <comp lib="0" loc="(60,490)" name="Clock"/>
-    <comp lib="0" loc="(990,480)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="labelloc" val="east"/>
-    </comp>
-    <comp lib="7" loc="(410,360)" name="main"/>
-    <comp lib="0" loc="(130,210)" name="Constant">
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="0" loc="(900,1420)" name="Constant">
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="4" loc="(990,810)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="zero"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="4" loc="(990,1080)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t2"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="2" loc="(550,1140)" name="Decoder">
-      <a name="select" val="4"/>
-    </comp>
-    <comp lib="0" loc="(490,400)" name="Bit Extender">
-      <a name="in_width" val="4"/>
-      <a name="out_width" val="8"/>
-    </comp>
     <comp lib="0" loc="(1450,1000)" name="Constant">
       <a name="facing" val="west"/>
     </comp>
@@ -372,20 +335,61 @@ d0720 d0230
       <a name="select" val="4"/>
       <a name="width" val="8"/>
     </comp>
+    <comp lib="0" loc="(990,480)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(900,1420)" name="Constant">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="0" loc="(410,510)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="20"/>
+      <a name="labelloc" val="east"/>
+    </comp>
+    <comp lib="0" loc="(870,810)" name="Constant">
+      <a name="width" val="8"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(490,400)" name="Bit Extender">
+      <a name="in_width" val="4"/>
+      <a name="out_width" val="8"/>
+    </comp>
+    <comp lib="4" loc="(990,1000)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t1"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="3" loc="(210,220)" name="Adder"/>
+    <comp lib="0" loc="(40,390)" name="Constant"/>
+    <comp lib="4" loc="(990,900)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t0"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="7" loc="(410,360)" name="main"/>
     <comp lib="4" loc="(120,380)" name="Register">
       <a name="trigger" val="falling"/>
+    </comp>
+    <comp lib="2" loc="(550,1140)" name="Decoder">
+      <a name="select" val="4"/>
     </comp>
     <comp lib="0" loc="(690,700)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
       <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="4" loc="(990,1320)" name="Register">
+    <comp lib="0" loc="(130,210)" name="Constant">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="4" loc="(990,1240)" name="Register">
       <a name="trigger" val="falling"/>
-      <a name="label" val="sp"/>
+      <a name="label" val="t4"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
-    <comp lib="3" loc="(210,220)" name="Adder"/>
     <comp lib="0" loc="(720,250)" name="Splitter">
       <a name="fanout" val="4"/>
       <a name="incoming" val="12"/>
@@ -401,10 +405,6 @@ d0720 d0230
       <a name="bit10" val="3"/>
       <a name="bit11" val="3"/>
     </comp>
-    <comp lib="0" loc="(870,810)" name="Constant">
-      <a name="width" val="8"/>
-      <a name="value" val="0x0"/>
-    </comp>
     <comp lib="0" loc="(1700,860)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
@@ -413,29 +413,29 @@ d0720 d0230
       <a name="labelloc" val="north"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
-    <comp lib="2" loc="(1430,1260)" name="Multiplexer">
-      <a name="select" val="4"/>
+    <comp lib="0" loc="(990,370)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
       <a name="width" val="8"/>
+      <a name="label" val="B"/>
+      <a name="labelloc" val="east"/>
     </comp>
-    <comp lib="4" loc="(990,1240)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t4"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
+    <comp lib="0" loc="(60,490)" name="Clock"/>
+    <comp lib="4" loc="(330,380)" name="ROM">
+      <a name="dataWidth" val="20"/>
+      <a name="contents">addr/data: 8 20
+d3720 d2240 e2200 d4740 b4250
+</a>
     </comp>
-    <comp lib="4" loc="(990,900)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t0"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
+    <comp lib="8" loc="(790,260)" name="main">
+      <a name="facing" val="south"/>
     </comp>
-    <comp lib="4" loc="(990,1000)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t1"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="4" loc="(990,1160)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t3"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
+    <comp lib="0" loc="(960,290)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="label" val="A"/>
+      <a name="labelloc" val="east"/>
     </comp>
   </circuit>
   <circuit name="Reg_File">
@@ -579,8 +579,21 @@ d0720 d0230
     <wire from="(1110,520)" to="(1110,690)"/>
     <wire from="(1050,350)" to="(1070,350)"/>
     <wire from="(880,690)" to="(960,690)"/>
-    <comp lib="0" loc="(1090,350)" name="Constant">
-      <a name="facing" val="west"/>
+    <comp lib="0" loc="(1020,740)" name="Pin">
+      <a name="width" val="4"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="ReadWhich2"/>
+      <a name="labelloc" val="south"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="2" loc="(1060,250)" name="Multiplexer">
+      <a name="select" val="4"/>
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="4" loc="(630,350)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t1"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
     <comp lib="0" loc="(1010,410)" name="Pin">
       <a name="width" val="4"/>
@@ -589,11 +602,58 @@ d0720 d0230
       <a name="labelloc" val="south"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
+    <comp lib="0" loc="(190,610)" name="Pin">
+      <a name="width" val="4"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="WriteRegister"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="4" loc="(630,510)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t3"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="0" loc="(1350,630)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="label" val="DataGot2"/>
+      <a name="labelloc" val="east"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="0" loc="(510,160)" name="Constant">
+      <a name="width" val="8"/>
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="4" loc="(630,670)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="sp"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="0" loc="(1090,350)" name="Constant">
+      <a name="facing" val="west"/>
+    </comp>
+    <comp lib="0" loc="(540,770)" name="Constant">
+      <a name="width" val="8"/>
+    </comp>
+    <comp lib="4" loc="(630,160)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="zero"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
+    <comp lib="0" loc="(120,810)" name="Clock"/>
+    <comp lib="0" loc="(1340,210)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="8"/>
+      <a name="label" val="DataGot1"/>
+      <a name="labelloc" val="north"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
     <comp lib="2" loc="(1070,610)" name="Multiplexer">
       <a name="select" val="4"/>
       <a name="width" val="8"/>
     </comp>
-    <comp lib="0" loc="(120,810)" name="Clock"/>
     <comp lib="0" loc="(100,500)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="Enable"/>
@@ -606,82 +666,22 @@ d0720 d0230
       <a name="labelloc" val="north"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
+    <comp lib="4" loc="(630,590)" name="Register">
+      <a name="trigger" val="falling"/>
+      <a name="label" val="t4"/>
+      <a name="labelfont" val="SansSerif bold 18"/>
+    </comp>
     <comp lib="2" loc="(190,490)" name="Decoder">
       <a name="select" val="4"/>
-    </comp>
-    <comp lib="4" loc="(630,430)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t2"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
     <comp lib="4" loc="(630,250)" name="Register">
       <a name="trigger" val="falling"/>
       <a name="label" val="t0"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
-    <comp lib="0" loc="(540,770)" name="Constant">
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="4" loc="(630,590)" name="Register">
+    <comp lib="4" loc="(630,430)" name="Register">
       <a name="trigger" val="falling"/>
-      <a name="label" val="t4"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="4" loc="(630,510)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t3"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="4" loc="(630,670)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="sp"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="0" loc="(510,160)" name="Constant">
-      <a name="width" val="8"/>
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="2" loc="(1060,250)" name="Multiplexer">
-      <a name="select" val="4"/>
-      <a name="width" val="8"/>
-    </comp>
-    <comp lib="4" loc="(630,350)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="t1"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="0" loc="(1350,630)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="label" val="DataGot2"/>
-      <a name="labelloc" val="east"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="0" loc="(1340,210)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="8"/>
-      <a name="label" val="DataGot1"/>
-      <a name="labelloc" val="north"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="0" loc="(190,610)" name="Pin">
-      <a name="width" val="4"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="WriteRegister"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="0" loc="(1020,740)" name="Pin">
-      <a name="width" val="4"/>
-      <a name="tristate" val="false"/>
-      <a name="label" val="ReadWhich2"/>
-      <a name="labelloc" val="south"/>
-      <a name="labelfont" val="SansSerif bold 18"/>
-    </comp>
-    <comp lib="4" loc="(630,160)" name="Register">
-      <a name="trigger" val="falling"/>
-      <a name="label" val="zero"/>
+      <a name="label" val="t2"/>
       <a name="labelfont" val="SansSerif bold 18"/>
     </comp>
   </circuit>
