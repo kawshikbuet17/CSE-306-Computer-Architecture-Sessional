@@ -1,0 +1,6 @@
+j loop
+add $t1,$t2,$t3
+loop  : sub $t1,$t2,$t3
+add $t1,$t2,$t4
+add $t4,$t2,$t3
+and $t4,$t2,$t3
