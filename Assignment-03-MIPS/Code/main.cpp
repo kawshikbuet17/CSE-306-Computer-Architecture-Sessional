@@ -138,13 +138,12 @@ vector<string> parse(string &tmp)
     {
         ret.push_back(now);
     }
-    assert(ret.size()==3);
     return ret;
 }
 
 bool check_num(string &s)
 {
-    for(int i=0;i<s.size();i++)
+    for(int i=0; i<s.size(); i++)
     {
         if(!(s[i]>='0' && s[i]<='9'))
         {
@@ -158,7 +157,7 @@ string get_bits(string &s)
 {
     int x = stoi(s);
     string ret = "0000";
-    for(int i=0;i<4;i++)
+    for(int i=0; i<4; i++)
     {
         if(x&(1<<i))
             ret[i]='1';
@@ -166,18 +165,93 @@ string get_bits(string &s)
     reverse(ret.begin(),ret.end());
     return ret;
 }
-int main()
+
+
+vector<vector<string> >code;
+
+map<string, int> labels;
+
+void read_code()
 {
     string op;
     while(cin>>op)
     {
+        vector<string>now;
         if(find(rtype.begin(),rtype.end(), op) != rtype.end())
         {
-            //rtype
             string tmp;
             getline(cin,tmp);
             vector<string>all = parse(tmp);
-            string opcode , src1 , src2 , dest , shft;
+            now.push_back(op);
+            for(auto it:all)
+            {
+                now.push_back(it);
+            }
+            code.push_back(now);
+        }
+        else if(find(itype.begin(),itype.end(), op) != itype.end())
+        {
+            string tmp;
+            getline(cin,tmp);
+            vector<string>all = parse(tmp);
+            now.push_back(op);
+            for(auto it:all)
+            {
+                now.push_back(it);
+            }
+            code.push_back(now);
+        }
+        else if(find(jtype.begin(),jtype.end(), op) != jtype.end())
+        {
+            string tmp;
+            getline(cin,tmp);
+            vector<string>all = parse(tmp);
+            now.push_back(op);
+            for(auto it:all)
+            {
+                now.push_back(it);
+            }
+            code.push_back(now);
+        }
+        else
+        {
+            //this is a label
+            string name = op;
+            bool flag= 0;
+            if(name.back()==':'){
+                name.pop_back();
+                flag = 1;
+            }
+            int line = code.size();
+            labels[name]= line;
+            //expecting a :
+            if(flag==0)
+            {
+                char ch;
+                while(1)
+                {
+                    cin>>ch;
+                    if(ch==':')
+                        break;
+                }
+            }
+        }
+    }
+}
+int main()
+{
+    freopen("input.txt","r",stdin);
+    read_code();
+    int line =0;
+    while(line<code.size())
+    {
+        string op = code[line][0];
+        if(find(rtype.begin(),rtype.end(), op) != rtype.end())
+        {
+            //rtype
+            vector<string>all = code[line];
+            all.erase(all.begin());
+            string opcode, src1, src2, dest, shft;
             opcode = get_op_code(op);
             dest = get_register_code(all[0]);
             src1 = get_register_code(all[1]);
@@ -186,18 +260,41 @@ int main()
                 src2 = "0000";
                 shft = get_bits(all[2]);
             }
-            else{
+            else
+            {
                 src2 = get_register_code(all[2]);
                 shft = "0000";
             }
             cout<<opcode<<" "<<src1<<" "<<src2<<" "<<dest<<" "<<shft<<"\n";
+            line++;
         }
         else if(find(itype.begin(),itype.end(), op) != itype.end())
         {
+            vector<string>all = code[line];
+            all.erase(all.begin());
 
+            line++;
         }
-        else{
-
+        else if(find(jtype.begin(),jtype.end(), op) != jtype.end())
+        {
+            vector<string>all = code[line];
+            all.erase(all.begin());
+            string opcode = get_op_code(op);
+            line = labels[all[0]];
+            string jmp = "00000000";
+            for(int i=0;i<8;i++)
+            {
+                if(line&(1<<i))
+                {
+                    jmp[i] = '1';
+                }
+            }
+            reverse(jmp.begin(),jmp.end());
+            cout<<opcode<<" "<<jmp<<"\n";
+        }
+        else
+        {
+            assert(false);
         }
     }
     return 0;
