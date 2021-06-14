@@ -1,0 +1,14 @@
+push $t0 -> 
+sw $t0, 0($sp)
+addi $sp,$sp,1
+
+
+push 3($t0) -> 
+lw $t5, 3($t0)
+sw $t5, 0($sp)
+addi $sp,$sp,1
+
+
+pop $t0 ->
+lw $t0, 0($sp)
+subi $sp,$sp,1
