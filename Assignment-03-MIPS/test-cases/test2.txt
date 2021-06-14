@@ -3,10 +3,9 @@ addi $t1, $t1, 10
 addi $t2, $t2, 15
 addi $t3, $t3, 20
 addi $t4, $t4, 20
-addi 
-swap: sll $t1, $t3
+swap: sll $t1, $t3,2
 add $t1, $t4, $t1
 lw $t0, 0($t1)
-lw $t2, 4(t1)
+lw $t2, 4($t1)
 sw $t2, 0($t1)
 sw $t0, 4($t1)
