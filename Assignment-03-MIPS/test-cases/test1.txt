@@ -1,0 +1,10 @@
+add $t0, $zero, $zero
+add $t1, $zero, $zero
+addi $t2, $zero, 5
+addi $t3, $zero, 10
+addi $t4, $zero, 15
+bne $t3, $t4, Else
+add $t0, $t1, $t2
+j Exit
+Else: sub $t0, $t1, $t2
+Exit:
