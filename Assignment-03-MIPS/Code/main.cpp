@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
-
 using namespace std;
+
+#ifdef APURBA
+#include "DEBUG_TEMPLATE.h"
+#else
+#define HERE
+#define debug(args...)
+#endif
 
 void createMap(unordered_map<string, char> *um)
 {
@@ -22,64 +28,36 @@ void createMap(unordered_map<string, char> *um)
     (*um)["1111"] = 'F';
 }
 
-// function to find hexadecimal
-// equivalent of binary
 string convertBinToHex(string bin)
 {
     int l = bin.size();
     int t = bin.find_first_of('.');
-
-    // length of string before '.'
     int len_left = t != -1 ? t : l;
-
-    // add min 0's in the beginning to make
-    // left substring length divisible by 4
     for (int i = 1; i <= (4 - len_left % 4) % 4; i++)
         bin = '0' + bin;
-
-    // if decimal point exists
     if (t != -1)
     {
-        // length of string after '.'
         int len_right = l - len_left - 1;
-
-        // add min 0's in the end to make right
-        // substring length divisible by 4
         for (int i = 1; i <= (4 - len_right % 4) % 4; i++)
             bin = bin + '0';
     }
-
-    // create map between binary and its
-    // equivalent hex code
     unordered_map<string, char> bin_hex_map;
     createMap(&bin_hex_map);
-
     int i = 0;
     string hex = "";
 
     while (1)
     {
-        // one by one extract from left, substring
-        // of size 4 and add its hex code
         hex += bin_hex_map[bin.substr(i, 4)];
         i += 4;
         if (i == bin.size())
             break;
-
-        // if '.' is encountered add it
-        // to result
         if (bin.at(i) == '.')
         {
             hex += '.';
             i++;
         }
     }
-
-    // required hexadecimal number
-//    while(hex.size()<5)
-//    {
-//        hex.insert(hex.begin(),'0');
-//    }
     return hex;
 }
 
@@ -179,9 +157,13 @@ string get_register_code(string &s)
     {
         return "0101";
     }
-    else if(s=="$one")
+    else if(s=="$t5")
     {
         return "0111";
+    }
+    else if(s=="$sp")
+    {
+        return "0110";
     }
     //invalid register
     assert(false);
@@ -224,7 +206,39 @@ vector<string> parse(string &tmp)
     }
     return ret;
 }
-
+vector<string> parse2(string &tmp)
+{
+    vector<string>ret;
+    string now;
+    for(int i=0; i<tmp.size(); i++)
+    {
+        if(tmp[i]=='(' || tmp[i]==')')
+        {
+            if(now.size())
+            {
+                ret.push_back(now);
+            }
+            now = "";
+        }
+        else if(tmp[i]==' ')
+        {
+            if(now.size())
+            {
+                ret.push_back(now);
+            }
+            now = "";
+        }
+        else
+        {
+            now += tmp[i];
+        }
+    }
+    if(now.size())
+    {
+        ret.push_back(now);
+    }
+    return ret;
+}
 bool check_num(string &s)
 {
     for(int i=0; i<s.size(); i++)
@@ -236,12 +250,35 @@ bool check_num(string &s)
     }
     return 1;
 }
-
+string get_bits2(int x)
+{
+    string ret = "00000000";
+    for(int i=0; i<8; i++)
+    {
+        if(x&(1<<i))
+            ret[i]='1';
+    }
+    reverse(ret.begin(),ret.end());
+    return ret;
+}
 string get_bits(string &s)
 {
     int x = stoi(s);
     string ret = "0000";
     for(int i=0; i<4; i++)
+    {
+        if(x&(1<<i))
+            ret[i]='1';
+    }
+    reverse(ret.begin(),ret.end());
+    return ret;
+}
+
+string get_bits2(string &s)
+{
+    int x = stoi(s);
+    string ret = "00000000";
+    for(int i=0; i<8; i++)
     {
         if(x&(1<<i))
             ret[i]='1';
@@ -297,12 +334,65 @@ void read_code()
             }
             code.push_back(now);
         }
+        else if(op=="push")
+        {
+            string tmp;
+            getline(cin,tmp);
+            vector<string>all = parse2(tmp);
+            if(all.size()==1)
+            {
+                //sw $t0, 0($sp)
+                //addi $sp,$sp,1
+                vector<string>now = {"sw", all[0], "0($sp)"};
+                vector<string>now2 = {"addi", "$t5", "$zero", "255"};
+                vector<string>now3 = {"sub", "$t5", "$t5", "$sp"};
+                vector<string>now4 = {"addi", "$sp", "$t5", "1"};
+                code.push_back(now);
+                code.push_back(now2);
+                code.push_back(now3);
+                code.push_back(now4);
+            }
+            else
+            {
+//                lw $t5, 3($t0)
+//                sw $t5, 0($sp)
+//                addi $sp,$sp,1
+                string val = all[0];
+                string reg = all[1];
+                string koto = val + "(" + reg + ")";
+                vector<string>now = {"lw", "$t5", koto};
+                code.push_back(now);
+                vector<string>now2 = {"sw", "$t5","0($sp)" };
+                code.push_back(now2);
+                vector<string>now4 = {"addi", "$t5", "$zero", "255"};
+                code.push_back(now4);
+                vector<string>now5 = {"sub", "$t5", "$t5", "$sp"};
+                code.push_back(now5);
+                vector<string>now3 = {"addi", "$sp", "$t5", "1"};
+                code.push_back(now3);
+            }
+        }
+        else if(op=="pop")
+        {
+            string tmp;
+            getline(cin,tmp);
+            vector<string>all = parse2(tmp);
+            vector<string>now = {"lw", all[0], "1($sp)"};
+            code.push_back(now);
+            vector<string>now4 = {"addi", "$t5", "$zero", "255"};
+            code.push_back(now4);
+            vector<string>now5 = {"sub", "$t5", "$t5", "$sp"};
+            code.push_back(now5);
+            vector<string>now2 = {"subi", "$sp", "$t5", "1"};
+            code.push_back(now2);
+        }
         else
         {
             //this is a label
             string name = op;
             bool flag= 0;
-            if(name.back()==':'){
+            if(name.back()==':')
+            {
                 name.pop_back();
                 flag = 1;
             }
@@ -322,10 +412,72 @@ void read_code()
         }
     }
 }
+
+
+//class Register{
+//public:
+//    string name;
+//    int val;
+//    Register(string s)
+//    {
+//        name = s;
+//        val = 0;
+//    }
+//    void add(Register r1, Register r2)
+//    {
+//        val = r1.val + r2.val;
+//    }
+//    void addi(Register r1 , int x)
+//    {
+//        val = r1.val + x;
+//    }
+//    void sub(Register r1 , Register r2)
+//    {
+//        val = r1.val - r2.val;
+//    }
+//    void subi(Register r1, int x)
+//    {
+//        val = r1.val - x;
+//    }
+//    void And(Register r1, Register r2)
+//    {
+//        val = r1.val&r2.val;
+//    }
+//    void andi(Register r1 , int x)
+//    {
+//        val = r1.val & x;
+//    }
+//    void Or(Register r1, Register r2)
+//    {
+//        val = r1.val|r2.val;
+//    }
+//    void ori(Register r1 , int x)
+//    {
+//        val = r1.val | x;
+//    }
+//    void sll(Register r1 , int x)
+//    {
+//        val = r1.val << x;
+//    }
+//    void srl(Register r1 , int x)
+//    {
+//        val = r1.val >> x;
+//    }
+//    void Nor(Register r1 , Register r2)
+//    {
+//        val = ~(r1.val | r2.val);
+//    }
+//
+//
+//};
+
+
 int main()
 {
     freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
     read_code();
+    //debug(code);
     int line =0;
     while(line<code.size())
     {
@@ -357,26 +509,102 @@ int main()
         {
             vector<string>all = code[line];
             all.erase(all.begin());
-
             line++;
+            if(op == "lw" || op=="sw")
+            {
+                //genjam
+                string opcode = get_op_code(op), src, dest = get_register_code(all[0]);
+                string val;
+                for(int i=0; i<all[1].size(); i++)
+                {
+                    if(all[1][i]=='(')
+                    {
+                        for(int j=i+1; j<all[1].size(); j++)
+                        {
+                            if(all[1][j]==')')
+                                break;
+                            src += all[1][j];
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        val += all[1][i];
+                    }
+                }
+                while(val.back()==' ')
+                    val.pop_back();
+                while(val[0]==' ')
+                    val.erase(val.begin());
+                while(src.back()==' ')
+                    src.pop_back();
+                while(src[0]==' ')
+                    src.erase(src.begin());
+                src = get_register_code(src);
+                val = get_bits2(val);
+                //cout<<opcode<<" "<<src<<" "<<dest<<" "<<val<<"\n";
+                //cout<<"Here\n";
+                cout<<convertBinToHex(opcode)<<convertBinToHex(src)<<convertBinToHex(dest)<<convertBinToHex(val)<<"\n";
+            }
+            else if(op=="beq" || op=="bneq")
+            {
+                string opcode = get_op_code(op), src = get_register_code(all[0]), dest = get_register_code(all[1]);
+                string value ;
+                int jabe = labels[all[2]];
+                if(jabe >= line)
+                {
+                    int koto =   jabe - line;
+                    value = get_bits2(koto);
+                }
+                else
+                {
+                    int koto = line - jabe;
+                    //2s compliment
+                    int x = 0;
+                    for(int i=0; i<8; i++)
+                    {
+                        if(koto&(1<<i))
+                        {
+
+                        }
+                        else
+                        {
+                            x |= (1<<i);
+                        }
+                    }
+                    x += 1;
+                    value = get_bits2(x);
+                }
+                //cout<<opcode<<" "<<src<<" "<<dest<<" "<<value<<"\n";
+                cout<<convertBinToHex(opcode)<<convertBinToHex(src)<<convertBinToHex(dest)<<convertBinToHex(value)<<"\n";
+
+            }
+            else
+            {
+                string opcode = get_op_code(op), src = get_register_code(all[1]), dest = get_register_code(all[0]), value= get_bits2(all[2]);
+                //cout<<opcode<<" "<<src<<" "<<dest<<" "<<value<<"\n";
+                cout<<convertBinToHex(opcode)<<convertBinToHex(src)<<convertBinToHex(dest)<<convertBinToHex(value)<<"\n";
+            }
+
         }
         else if(find(jtype.begin(),jtype.end(), op) != jtype.end())
         {
             vector<string>all = code[line];
             all.erase(all.begin());
             string opcode = get_op_code(op);
-            line = labels[all[0]];
+            int tmp = labels[all[0]];
             string jmp = "00000000";
-            for(int i=0;i<8;i++)
+            for(int i=0; i<8; i++)
             {
-                if(line&(1<<i))
+                if(tmp&(1<<i))
                 {
                     jmp[i] = '1';
                 }
             }
             reverse(jmp.begin(),jmp.end());
-            //cout<<opcode<<" "<<jmp<<"\n";
-            cout<<convertBinToHex(opcode)<<""<<convertBinToHex(jmp)<<"\n";
+            //cout<<opcode<<" "<<jmp<<" "<< "00000000"<<"\n";
+            cout<<convertBinToHex(opcode)<<""<<convertBinToHex(jmp)<<"00\n";
+            line++;
         }
         else
         {
@@ -385,5 +613,3 @@ int main()
     }
     return 0;
 }
-/*
-*/
