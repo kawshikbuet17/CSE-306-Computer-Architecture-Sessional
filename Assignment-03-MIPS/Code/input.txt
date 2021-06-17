@@ -1,5 +1,90 @@
-add $t1,$t2,$one 
-add $t3,$t1,$t1
-sub $t1,$t1,$zero
-add $t3,$t3,$one
-or $t4,$t3,$t1
+addi $t1, $zero , 10 //t1 = 10
+
+push $t1 // 10
+
+pop $t1 //t1 = 10
+
+sub $t4, $t1, $t3 //t4 = 10
+
+nor $t1, $t4, $t2 //t1= 237
+
+push $t2 //0
+
+addi $t4, $zero, 15 //t4 = 15
+
+lw $t1, 3($t1) //t1 = 0
+
+srl $t2, $t1, 10 //t2 = 0
+
+subi $t1, $t0, 5 //t1= -5
+
+add $t3, $t0, $t1 //t3 = -5
+
+push $t4 //15
+
+push $t3 //-5
+
+pop $t0 //t0 = -5
+
+label5:
+
+push $t0 //-5
+
+pop $t1 //t1= -5
+
+sll $t1, $t2, 10 //t1= 0
+
+push $t2 //0
+
+push $t5 //0
+
+beq $t0, $t3, label1 //branch
+
+j end
+
+label1:
+
+sll $t4, $t0, 2 //t4 = -20
+
+sub $t1, $t4, $t3 //-20+5 = -15 = t1
+
+or $t4, $t1, $t0 //
+
+nor $t1, $t4, $t3 
+
+andi $t1, $t1, 0  //t1= 0
+
+ori $t0, $t1, 20 //t0 = 20
+
+sw $t0, 2($t0) 
+
+lw $t1, 6($t1) //t1= 0
+
+srl $t1, $t1, 12 //t1= 0
+
+j label2
+j label5
+
+label3:
+
+push $t3 
+
+j end
+
+label2:
+
+beq $t3, $t4, label3 
+
+bneq $t3, $t4, label1
+
+end:
+
+andi $t1, $t1, 0
+
+ori $t0, $t1, 20 
+
+sw $t0, 2($t0)  
+
+exit:
+
+nor $t3, $t3, $t1 
