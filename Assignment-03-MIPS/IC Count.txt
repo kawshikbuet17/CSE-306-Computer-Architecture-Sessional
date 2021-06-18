@@ -1,11 +1,16 @@
 MAIN
 ===============
-ROM - 1
+ROM - 2
 RAM(8bit)-1
 ADDER(8bit)-3
-MUX(8bit)-3
-MUX(4bit)-1
 bit-extender-1
+
+MUX
+Select_Bit	Data_bit
+1		8
+1		8
+1		4
+2		8
 
 Reg_File
 =================
