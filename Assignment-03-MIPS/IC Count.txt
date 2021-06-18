@@ -1,0 +1,28 @@
+MAIN
+===============
+ROM - 1
+RAM(8bit)-1
+ADDER(8bit)-3
+MUX(8bit)-3
+MUX(4bit)-1
+bit-extender-1
+
+Reg_File
+=================
+Decoder(4to16) - 1
+AND(2bit) - 8
+Register(8bit) - 8
+Subtractor(8bit)-1
+MUX(4selectionbit) - 2
+
+PC_MUX_SELECTOR
+=================
+Comparator(8bit)-1
+Or gate(2) - 1
+
+Control
+=======================
+Not Gate(1) - 1
+And Gate(2) - 1
+
+
