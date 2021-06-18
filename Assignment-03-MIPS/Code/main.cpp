@@ -1,12 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#ifdef APURBA
-#include "DEBUG_TEMPLATE.h"
-#else
-#define HERE
-#define debug(args...)
-#endif
 
 void createMap(unordered_map<string, char> *um)
 {
@@ -341,8 +335,6 @@ void read_code()
             vector<string>all = parse2(tmp);
             if(all.size()==1)
             {
-                //sw $t0, 0($sp)
-                //addi $sp,$sp,1
                 vector<string>now = {"sw", all[0], "0($sp)"};
                 vector<string>now2 = {"addi", "$t5", "$zero", "255"};
                 vector<string>now3 = {"sub", "$t5", "$t5", "$sp"};
@@ -354,9 +346,6 @@ void read_code()
             }
             else
             {
-//                lw $t5, 3($t0)
-//                sw $t5, 0($sp)
-//                addi $sp,$sp,1
                 string val = all[0];
                 string reg = all[1];
                 string koto = val + "(" + reg + ")";
@@ -412,65 +401,6 @@ void read_code()
         }
     }
 }
-
-
-//class Register{
-//public:
-//    string name;
-//    int val;
-//    Register(string s)
-//    {
-//        name = s;
-//        val = 0;
-//    }
-//    void add(Register r1, Register r2)
-//    {
-//        val = r1.val + r2.val;
-//    }
-//    void addi(Register r1 , int x)
-//    {
-//        val = r1.val + x;
-//    }
-//    void sub(Register r1 , Register r2)
-//    {
-//        val = r1.val - r2.val;
-//    }
-//    void subi(Register r1, int x)
-//    {
-//        val = r1.val - x;
-//    }
-//    void And(Register r1, Register r2)
-//    {
-//        val = r1.val&r2.val;
-//    }
-//    void andi(Register r1 , int x)
-//    {
-//        val = r1.val & x;
-//    }
-//    void Or(Register r1, Register r2)
-//    {
-//        val = r1.val|r2.val;
-//    }
-//    void ori(Register r1 , int x)
-//    {
-//        val = r1.val | x;
-//    }
-//    void sll(Register r1 , int x)
-//    {
-//        val = r1.val << x;
-//    }
-//    void srl(Register r1 , int x)
-//    {
-//        val = r1.val >> x;
-//    }
-//    void Nor(Register r1 , Register r2)
-//    {
-//        val = ~(r1.val | r2.val);
-//    }
-//
-//
-//};
-
 
 int main()
 {
