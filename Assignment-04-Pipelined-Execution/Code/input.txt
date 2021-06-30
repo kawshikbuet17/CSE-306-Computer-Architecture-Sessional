@@ -1,41 +1,4 @@
-addi $t1, $t1, 12 
-subi $t2, $t1, 5 
-add $t3, $t1, $t2 
-sub $t4, $t1, $t2 
-and $t2, $t2, $t4 
-ori $t2, $t2, 48 
-andi $t2,$t2,52 
-sll $t0,$t1,2 
-srl $t0,$t0,3
-nor $t1, $t1, $t2
-
-addi $t1,$zero, 4 
-addi $t0,$zero, 0 
-addi $t2,$zero, 1 
-
-loop:
-sw $t2,1($t0)
-addi $t2,$t2,5
-addi $t0,$t0,2
-bneq $t0,$t1,loop 
-
-
-add $t0,$zero,$zero
-lw $t0,3($zero) 
-lw $t0,5($zero) 
-
-
-push $t0 
-push 1($zero) 
-pop $t4 
-pop $t2 
-
-andi $t1,$zero,255
-
-beq $zero,$t1,last
-addi $t1,$t1,1
-last:
-j last_last
-addi $t1,$t1,1
-last_last:
-
+add $t1, $t2, $t3
+sub $t4, $t1, $t2
+or $t4, $t1, $t3
+add $t4, $t4, $t3
