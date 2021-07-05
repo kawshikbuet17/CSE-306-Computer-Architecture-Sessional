@@ -6,6 +6,7 @@ subi $t5,$t5,$sp
 addi $sp,$t5,1
 
 
+
 push 3($t0) -> 
 lw $t5, 3($t0)
 sw $t5, 0($sp)
@@ -19,3 +20,13 @@ lw $t0, 0($sp)
 addi $t5,$zero,11111111b
 subi $t5,$t5,$sp
 subi $sp,$t5,1
+
+
+
+
+
+
+*************
+t5=FF-sp
+sp=t5+1
+addi $sp,$sp,1
